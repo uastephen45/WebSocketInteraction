@@ -234,7 +234,7 @@ namespace ChatService.ChatSupport
 
             var location = System.Reflection.Assembly.GetEntryAssembly().Location;
             var directory = System.IO.Path.GetDirectoryName(location);
-            directory = String.Concat(directory + "\\StaticResources\\");
+            directory = String.Concat(directory + "//StaticResources//");
 
 
             using (StreamReader sr = new StreamReader(string.Concat(directory, "WhiteCards.json")))
