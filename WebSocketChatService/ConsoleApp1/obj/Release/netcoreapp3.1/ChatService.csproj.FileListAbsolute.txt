@@ -1,0 +1,23 @@
+C:\Users\Stevey\source\repos\WebSocketInteraction\WebSocketChatService\ConsoleApp1\bin\Release\netcoreapp3.1\ChatService.exe
+C:\Users\Stevey\source\repos\WebSocketInteraction\WebSocketChatService\ConsoleApp1\bin\Release\netcoreapp3.1\html\index.html
+C:\Users\Stevey\source\repos\WebSocketInteraction\WebSocketChatService\ConsoleApp1\bin\Release\netcoreapp3.1\html\js\ChatService.js
+C:\Users\Stevey\source\repos\WebSocketInteraction\WebSocketChatService\ConsoleApp1\bin\Release\netcoreapp3.1\html\js\Websocket.js
+C:\Users\Stevey\source\repos\WebSocketInteraction\WebSocketChatService\ConsoleApp1\bin\Release\netcoreapp3.1\html\views\chat - Copy.html
+C:\Users\Stevey\source\repos\WebSocketInteraction\WebSocketChatService\ConsoleApp1\bin\Release\netcoreapp3.1\html\views\chat.html
+C:\Users\Stevey\source\repos\WebSocketInteraction\WebSocketChatService\ConsoleApp1\bin\Release\netcoreapp3.1\html\views\home.html
+C:\Users\Stevey\source\repos\WebSocketInteraction\WebSocketChatService\ConsoleApp1\bin\Release\netcoreapp3.1\StaticResources\BlackCards.json
+C:\Users\Stevey\source\repos\WebSocketInteraction\WebSocketChatService\ConsoleApp1\bin\Release\netcoreapp3.1\StaticResources\WhiteCards.json
+C:\Users\Stevey\source\repos\WebSocketInteraction\WebSocketChatService\ConsoleApp1\bin\Release\netcoreapp3.1\ChatService.deps.json
+C:\Users\Stevey\source\repos\WebSocketInteraction\WebSocketChatService\ConsoleApp1\bin\Release\netcoreapp3.1\ChatService.runtimeconfig.json
+C:\Users\Stevey\source\repos\WebSocketInteraction\WebSocketChatService\ConsoleApp1\bin\Release\netcoreapp3.1\ChatService.runtimeconfig.dev.json
+C:\Users\Stevey\source\repos\WebSocketInteraction\WebSocketChatService\ConsoleApp1\bin\Release\netcoreapp3.1\ChatService.dll
+C:\Users\Stevey\source\repos\WebSocketInteraction\WebSocketChatService\ConsoleApp1\bin\Release\netcoreapp3.1\ChatService.pdb
+C:\Users\Stevey\source\repos\WebSocketInteraction\WebSocketChatService\ConsoleApp1\bin\Release\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\Stevey\source\repos\WebSocketInteraction\WebSocketChatService\ConsoleApp1\bin\Release\netcoreapp3.1\CSharpPacheCore.dll
+C:\Users\Stevey\source\repos\WebSocketInteraction\WebSocketChatService\ConsoleApp1\bin\Release\netcoreapp3.1\CSharpPacheCore.pdb
+C:\Users\Stevey\source\repos\WebSocketInteraction\WebSocketChatService\ConsoleApp1\obj\Release\netcoreapp3.1\ChatService.csprojAssemblyReference.cache
+C:\Users\Stevey\source\repos\WebSocketInteraction\WebSocketChatService\ConsoleApp1\obj\Release\netcoreapp3.1\ChatService.AssemblyInfoInputs.cache
+C:\Users\Stevey\source\repos\WebSocketInteraction\WebSocketChatService\ConsoleApp1\obj\Release\netcoreapp3.1\ChatService.AssemblyInfo.cs
+C:\Users\Stevey\source\repos\WebSocketInteraction\WebSocketChatService\ConsoleApp1\obj\Release\netcoreapp3.1\ChatService.csproj.CopyComplete
+C:\Users\Stevey\source\repos\WebSocketInteraction\WebSocketChatService\ConsoleApp1\obj\Release\netcoreapp3.1\ChatService.dll
+C:\Users\Stevey\source\repos\WebSocketInteraction\WebSocketChatService\ConsoleApp1\obj\Release\netcoreapp3.1\ChatService.pdb

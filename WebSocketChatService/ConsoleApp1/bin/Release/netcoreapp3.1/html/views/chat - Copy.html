@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+   <style>
+       *{
+
+           background:black;
+           color:white;
+           font-family:'Courier New';
+       }
+   </style>
+    <title></title>
+</head>
+<body>
+    <div ng-controller="ChatController">
+        <h3>Welcome To The Chat Room</h3>
+        <h3>{{Message}}</h3>
+        <div ng-show="!LoggedIn">
+            UserName<input type="text" ng-model="Username" />
+            Color Selection
+            <select ng-model="selectedColor" >
+                <option ng-repeat="C in Colors" value="{{C}}">{{C}}</option>
+            </select>
+            <button ng-click="Login()">Login</button>
+        </div>
+        <div ng-show="LoggedIn">
+            <table>
+                <tr>
+                    <th>userName</th>
+                    <th>dateTime</th>
+                    <th>content</th>
+                </tr>
+                <tr ng-repeat="M in Messages" class="{{M.class}}">
+                    <td>{{ M.userName }}</td>
+                    <td>{{ M.dateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td style="color:{{M.userColor}};">{{ M.content }}</td>
+                </tr >
+            </table>
+            <br />
+            <input type="text" ng-model="CurrentText" />
+            <button ng-click="SendMemo()">Send</button>
+        </div>
+    </div>
+</body>
+</html>
