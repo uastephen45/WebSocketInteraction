@@ -11,7 +11,7 @@ namespace ChatService
         {   
             ServiceConfig config = new ServiceConfig();
              config.IpAdress = "172.31.43.8";
-            //config.IpAdress = "10.0.0.160";
+            //config.IpAdress = "192.168.4.29";
             config.ListeningPort = 80;
             service = new CPacheService(config);
             service.Start<Program>();

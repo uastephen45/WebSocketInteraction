@@ -6,26 +6,25 @@ using System.Text;
 
 namespace ChatService.ChatSupport
 {
-    public class GetAllChatRoomController : AbstractUserController
+    public class CreateNewChatRoomController : AbstractUserController
     {
-        public GetAllChatRoomController()
+        public CreateNewChatRoomController()
         {
 
         }
 
         public override UserControllerConfig Config()
         {
-            return new UserControllerConfig() { HttpMethod = HttpMethod.GET, Url = "/api/ChatRooms" };
+            return new UserControllerConfig() { HttpMethod = HttpMethod.GET, Url = "/api/CreateNewChatRoom" };
         }
 
         protected override HttpResponse Response(HttpRequest req)
         {
-            var list = ChatServiceRouter.GetAllRooms();
-            var ret = JsonConvert.SerializeObject(list);
-
+            var roomType = req.QueryParameters["roomType"];
+            var retid = GameServiceRouter.CreateNewChatRoom(roomType);
+            var ret = JsonConvert.SerializeObject(retid);
             return new HttpResponse() { ContentType = "application/json", ByteArrayResponseBody = UTF8Encoding.UTF8.GetBytes(ret), ResponseBody = ret, SC = StatusCode.Ok };
 
         }
     }
 }
-

@@ -8,8 +8,8 @@ ChatServiceApp.config(function ($routeProvider) {
         .when('/Home', {
             templateUrl: 'views/home.html'
         })
-        .when('/Chat', {
-            templateUrl: 'views/chat.html'
+        .when('/CaH', {
+            templateUrl: 'views/CaH.html'
         });
 })
 
@@ -24,13 +24,13 @@ ChatServiceApp.controller('HomeController', function ($scope, $routeParams, $loc
     };
     $scope.GoToChat = function (chat) {
         $rootScope.RoomId = chat.instance;
-        $location.path('/Chat');
+        $location.path('/'+chat.topic);
     };
 
-    $scope.CreateNew = function () {
-        $http.get("/api/CreateNewChatRoom").then(function (p) {
+    $scope.CreateNew = function (roomType) {
+        $http.get("/api/CreateNewChatRoom?roomType=" + roomType).then(function (p) {
             $rootScope.RoomId = p.data;//this is the id to the chatroom
-            $location.path('/Chat');
+            $location.path('/' + roomType);
         }, function (p) {
             console.log('Failed');
         });
@@ -38,7 +38,7 @@ ChatServiceApp.controller('HomeController', function ($scope, $routeParams, $loc
 
     $scope.Init();
 });
-ChatServiceApp.controller('ChatController', function ($scope, $routeParams, $location,$rootScope,$http) {
+ChatServiceApp.controller('CaHController', function ($scope, $routeParams, $location,$rootScope,$http) {
 
     var socket = [];
     $scope.Messages = [];
@@ -207,7 +207,7 @@ ChatServiceApp.controller('ChatController', function ($scope, $routeParams, $loc
     };
     $scope.init = function () {
         $scope.Message = "Loading";
-        socket = new WebSocket("ws://" + location.host + "/api/ChatService?roomid=" + $rootScope.RoomId);
+        socket = new WebSocket("ws://" + location.host + "/api/CaHService?roomid=" + $rootScope.RoomId);
         socket.onopen = (function (event) {
             $scope.Validated = true;
             $scope.Message = "Access Approved";

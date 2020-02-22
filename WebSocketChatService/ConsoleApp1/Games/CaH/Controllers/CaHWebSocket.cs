@@ -7,22 +7,22 @@ using System.Text;
 
 namespace ChatService.ChatSupport
 {
-    public class ChatWebSocket : AbstractWebSocket
+    public class CaHWebSocket : AbstractWebSocket
     {
-        ChatRoom ChatRoom;
+        IGameRoom ChatRoom;
         CPacheStream myStream;
         public override WebSocketConfig Config()
         {
-            return new WebSocketConfig() { Url = "/api/ChatService" };
+            return new WebSocketConfig() { Url = "/api/CaHService" };
         }
 
         protected override void ClientStream(HttpRequest request, CPacheStream cPacheStream)
         {
             myStream = cPacheStream;
             var id = request.Url.Split("?roomid=")[1].Replace("%22", "");
-            lock (ChatServiceRouter.locker)
+            lock (GameServiceRouter.locker)
             {
-                foreach (ChatRoom chatRoom in ChatServiceRouter.GetAllRooms())
+                foreach (IGameRoom chatRoom in GameServiceRouter.GetAllRooms())
                 {
                     if (chatRoom.instance == id)
                     {

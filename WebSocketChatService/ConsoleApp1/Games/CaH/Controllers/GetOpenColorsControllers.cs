@@ -21,15 +21,15 @@ namespace ChatService.ChatSupport
         protected override HttpResponse Response(HttpRequest req)
         {
             var roomid = req.QueryParameters["roomid"].Replace("%22", "");
-            ChatRoom chatRoom = null;
-            foreach(var room in ChatServiceRouter.GetAllRooms())
+            IGameRoom chatRoom = null;
+            foreach(var room in GameServiceRouter.GetAllRooms())
             {
                 if(room.instance == roomid)
                 {
                     chatRoom = room;
                 }
             }
-           var ret = chatRoom.OpenColors;
+            var ret = "gren";
             var JsonRet = Newtonsoft.Json.JsonConvert.SerializeObject(ret);
             return new HttpResponse() { ContentType = "application/json", ByteArrayResponseBody = UTF8Encoding.UTF8.GetBytes(JsonRet), ResponseBody = JsonRet, SC = StatusCode.Ok };
 

@@ -30,7 +30,7 @@
     <None Update="html\views\chat - Copy.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="html\views\chat.html">
+    <None Update="html\views\CaH.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="html\views\home.html">

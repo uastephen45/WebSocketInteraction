@@ -16,8 +16,8 @@ C:\Users\Stevey\source\repos\WebSocketInteraction\WebSocketChatService\ConsoleAp
 C:\Users\Stevey\source\repos\WebSocketInteraction\WebSocketChatService\ConsoleApp1\bin\Debug\netcoreapp3.1\html\index.html
 C:\Users\Stevey\source\repos\WebSocketInteraction\WebSocketChatService\ConsoleApp1\bin\Debug\netcoreapp3.1\html\js\ChatService.js
 C:\Users\Stevey\source\repos\WebSocketInteraction\WebSocketChatService\ConsoleApp1\bin\Debug\netcoreapp3.1\html\js\Websocket.js
-C:\Users\Stevey\source\repos\WebSocketInteraction\WebSocketChatService\ConsoleApp1\bin\Debug\netcoreapp3.1\html\views\chat.html
 C:\Users\Stevey\source\repos\WebSocketInteraction\WebSocketChatService\ConsoleApp1\bin\Debug\netcoreapp3.1\html\views\home.html
 C:\Users\Stevey\source\repos\WebSocketInteraction\WebSocketChatService\ConsoleApp1\bin\Debug\netcoreapp3.1\html\views\chat - Copy.html
 C:\Users\Stevey\source\repos\WebSocketInteraction\WebSocketChatService\ConsoleApp1\bin\Debug\netcoreapp3.1\StaticResources\WhiteCards.json
 C:\Users\Stevey\source\repos\WebSocketInteraction\WebSocketChatService\ConsoleApp1\bin\Debug\netcoreapp3.1\StaticResources\BlackCards.json
+C:\Users\Stevey\source\repos\WebSocketInteraction\WebSocketChatService\ConsoleApp1\bin\Debug\netcoreapp3.1\html\views\CaH.html

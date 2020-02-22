@@ -8,11 +8,15 @@ using System.Text;
 
 namespace ChatService.ChatSupport
 {
-    public class ChatRoom
+
+    public class CaHRoom : IGameRoom
     {
-        public string instance = Guid.NewGuid().ToString().Replace("-","");
+         string Instance = Guid.NewGuid().ToString().Replace("-", "");
+        public string instance { get { return Instance; } }
+
         public string name { get; set; }
-        public string topic { get; set; }
+        public string topic { get { return "CaH"; } }
+
         List<ChatLine> chatContent = new List<ChatLine>();
         Dictionary<String, CPacheStream> cpacheStreams = new Dictionary<string, CPacheStream>();
         List<CPacheStream> disposedRunningList = new List<CPacheStream>();
@@ -22,27 +26,30 @@ namespace ChatService.ChatSupport
         public List<String> OpenColors = new List<string>();
         public Dictionary<String, Player> players = new Dictionary<string, Player>();
         object locker = new object();
-        public ChatRoom()
+
+        
+        
+        public CaHRoom()
         {
-               InitCards();
+            InitCards();
         }
-        public string  handleClientAppMessage(ChatLine chat)
+        public string handleClientAppMessage(ChatLine chat)
         {
-                switch (chat.content.Substring(7, 3))
-                {
+            switch (chat.content.Substring(7, 3))
+            {
                 case "STG":
                     GameUpdate gameUpdate = new GameUpdate() { players = new List<Player>() };
-                    foreach(KeyValuePair<String,Player> keyValuePair in players)
+                    foreach (KeyValuePair<String, Player> keyValuePair in players)
                     {
                         gameUpdate.players.Add(keyValuePair.Value);
                     }
                     gameUpdate.BlackCard = getBlackCard();
                     var retval = Newtonsoft.Json.JsonConvert.SerializeObject(gameUpdate);
-                    foreach(KeyValuePair<String,CPacheStream> streams in cpacheStreams)
+                    foreach (KeyValuePair<String, CPacheStream> streams in cpacheStreams)
                     {
                         streams.Value.Broadcast("SideCarSTG" + retval);
                         // becuase we are starting the game everyone gets their white cards 
-                        for(int q = 0; q < 6;q++)
+                        for (int q = 0; q < 6; q++)
                         {
                             Card card1 = getWhiteCard();
                             Card bcard = getBlackCard();
@@ -54,7 +61,7 @@ namespace ChatService.ChatSupport
                 //whitecarddelivery
                 case "WCD":
                     //todo add card to correct round. 
-                    var card = new Card() { content = chat.content.Substring(10, chat.content.Length - 10)};
+                    var card = new Card() { content = chat.content.Substring(10, chat.content.Length - 10) };
                     currentWhiteCards.Add(chat.userName, card);
                     var ret = Newtonsoft.Json.JsonConvert.SerializeObject(getWhiteCard());
                     foreach (KeyValuePair<String, CPacheStream> stream in cpacheStreams)
@@ -64,14 +71,14 @@ namespace ChatService.ChatSupport
                             stream.Value.Broadcast("SideCarHWC" + ret);
                         }
                     }
-                    if (players.Count-1 == currentWhiteCards.Count)
+                    if (players.Count - 1 == currentWhiteCards.Count)
                     {
                         foreach (KeyValuePair<String, CPacheStream> stream in cpacheStreams)
                         {
                             foreach (var pWhiteCard in currentWhiteCards)
                             {
                                 stream.Value.Broadcast("SideCarPWC" + Newtonsoft.Json.JsonConvert.SerializeObject(pWhiteCard.Value));
-                            }                                        
+                            }
                         }
                     }
 
@@ -82,11 +89,11 @@ namespace ChatService.ChatSupport
                     var winner = "";
                     var cardString = chat.content.Substring(10, chat.content.Length - 10);
                     Card winnerCard = new Card();
-                    foreach(KeyValuePair<String,Card> whitecard in currentWhiteCards)
+                    foreach (KeyValuePair<String, Card> whitecard in currentWhiteCards)
                     {
-                        if (whitecard.Value.content ==cardString)
+                        if (whitecard.Value.content == cardString)
                         {
-                           winner =  whitecard.Key;
+                            winner = whitecard.Key;
                             winnerCard = whitecard.Value;
                         }
                     }
@@ -99,12 +106,12 @@ namespace ChatService.ChatSupport
                     }
                     System.Threading.Thread.Sleep(3000);
 
-                        GameUpdate gameUpdate2 = new GameUpdate() { players = new List<Player>() };
-                   
+                    GameUpdate gameUpdate2 = new GameUpdate() { players = new List<Player>() };
+
                     var i = 1;
                     var lastTurn = 0;
-                    var nextTurn = 0; 
-                      
+                    var nextTurn = 0;
+
                     foreach (KeyValuePair<String, Player> keyValuePair in players)
                     {
                         if (keyValuePair.Value.myTurn)
@@ -119,7 +126,8 @@ namespace ChatService.ChatSupport
                     if (lastTurn == players.Count)
                     {
                         nextTurn = 1;
-                    }else
+                    }
+                    else
                     {
                         nextTurn = lastTurn + 1;
                     }
@@ -129,7 +137,7 @@ namespace ChatService.ChatSupport
                         if (nextTurn == i)
                         {
                             keyValuePair.Value.myTurn = true;
-                              i = i + 1;
+                            i = i + 1;
                         }
                         else
                         {
@@ -143,26 +151,26 @@ namespace ChatService.ChatSupport
                     currentWhiteCards.Clear();
                     foreach (KeyValuePair<String, CPacheStream> c in cpacheStreams)
                     {
-                        c.Value.Broadcast("SideCarSTG"+JsonValue);
+                        c.Value.Broadcast("SideCarSTG" + JsonValue);
                     }
 
                     return "";
-                    
+
                 //getNewCard TODO
                 case "GNC":
                     return "";
 
                 default:
-                       return "";
-                 
+                    return "";
+
             }
-           
+
         }
 
         public Card getWhiteCard()
         {
-         
-            var rand = new Random();            
+
+            var rand = new Random();
             var ret = whiteCards[rand.Next(0, whiteCards.Count - 1)];
             var i = whiteCards.Remove(ret);
             return ret;
@@ -177,7 +185,7 @@ namespace ChatService.ChatSupport
         }
 
 
-        public void addLine(ChatLine chatLine,CPacheStream cPacheStream)
+        public void addLine(ChatLine chatLine, CPacheStream cPacheStream)
         {
             if (cpacheStreams.ContainsKey(cPacheStream.StreamId))
             {
@@ -192,14 +200,14 @@ namespace ChatService.ChatSupport
                     players.Add(chatLine.userName, new Player() { myTurn = false, Score = 0, Username = chatLine.userName });
                 }
             }
-            
+
 
             lock (locker)
-            {                
+            {
                 //add it to the legder 
                 chatContent.Add(chatLine);
 
-                foreach (KeyValuePair<String,CPacheStream> client in cpacheStreams)
+                foreach (KeyValuePair<String, CPacheStream> client in cpacheStreams)
                 {
                     var ret = JsonConvert.SerializeObject(chatLine);
                     try
@@ -228,7 +236,7 @@ namespace ChatService.ChatSupport
             }
 
         }
-     
+
         public void InitCards()
         {
 
@@ -257,7 +265,9 @@ namespace ChatService.ChatSupport
                     }
                 }
             }
-          
+
         }
+
+        
     }
 }

@@ -8,11 +8,13 @@
 <body>
     <div ng-controller="HomeController">
         <h3>ChatService Core</h3>
-        <div ng-repeat="R in Rooms">    
-            <button ng-click="GoToChat(R)">{{R.instance}}</button>
+        <div ng-repeat="R in Rooms">
+            <button ng-click="GoToChat(R)">{{R.instance}} || {{R.topic}}</button>
         </div>
         <br />
-        <button ng-click="CreateNew()">Create New Chat</button>
+        <button ng-click="CreateNew('CaH')">Create CaH GameRoom</button>
+        <button ng-click="CreateNew('FrankinStory')">Create FrankinStory GameRoom</button>
+
     </div>
 </body>
 </html>
