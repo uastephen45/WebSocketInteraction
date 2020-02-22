@@ -27,7 +27,7 @@
     <None Update="html\js\Websocket.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="html\views\chat - Copy.html">
+    <None Update="html\views\FrankinStory.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="html\views\CaH.html">
