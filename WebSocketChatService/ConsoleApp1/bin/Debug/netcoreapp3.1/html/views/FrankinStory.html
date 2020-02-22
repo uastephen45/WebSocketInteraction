@@ -19,22 +19,23 @@
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: Consolas;
             background: #333;
             color: mediumseagreen;
         }
-
         p {
             margin: 8px 4px;
         }
-
+        input {
+            background-color: #333;
+            color: mediumseagreen;
+            border-style: solid;
+        }
         mark {
             color: mediumseagreen;
             background-color: #885d49;
         }
-
         #wrapper {
             height: 100vh;
             display: flex;
@@ -53,11 +54,19 @@
                     flex: 1;
                     padding: 24px;
                 }
+                    #messageOutput {
+                        border: 2px solid mediumseagreen;
+                        height: 20%;
+                        border-bottom: 1px solid mediumseagreen;
+                        text-align: center;
+                    }
                     #chatOutput {
                         border: 2px solid mediumseagreen;
                         border-bottom: 1px solid mediumseagreen;
-                        height: 90%;
+                        border-top: 1px solid mediumseagreen;
+                        height: 70%;
                         background: #333;
+                        overflow: auto;
                     }
                     #chatInput {
                         border: 2px solid mediumseagreen;
@@ -145,20 +154,23 @@
             <div id="storyContainer">
                 <div id="storyOutput">
 
-                    <div ng-repeat="storyLine in storyLines">
+                    <div ng-repeat="storyLine in Story">
                         <p>{{storyLine.content}}</p>
                     </div>
 
                 </div>
                 <div id="storyInput">
-                    <textarea id="storyText" ng-model="userinput"></textarea>
+                    <textarea id="storyText" ng-disabled="!enableStoryWrite" ng-model="userinput"></textarea>
+                    <button ng-disabled="!enableStoryWrite" ng-click="sendStoryUpdate()">send </button>
                     <div id="charCount"><span id="charUsed">{{userinput.length}}</span>/<span id="charTotal">256</span></div>
                 </div>
             </div>
 
             <div id="chatContainer">
-                <input type="text" ng-model="Username" ng-disabled="UsernameDisabled" />
-                <h3>{{Message}}</h3>
+                <div id="messageOutput">
+                    <input type="text" ng-model="Username" ng-disabled="UsernameDisabled" />
+                    <h3>{{Message}}</h3>
+                </div>
                
                 <div id="chatOutput">
                     <p ng-repeat="M in Messages" class="{{M.class}}">

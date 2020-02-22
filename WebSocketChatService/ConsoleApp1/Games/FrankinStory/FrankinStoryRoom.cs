@@ -1,5 +1,6 @@
 ﻿using ChatService.ChatSupport;
 using ChatService.types;
+using ChatService.types.Games.FrankenStory;
 using CSharpPacheCore.Streamers;
 using Newtonsoft.Json;
 using System;
@@ -19,6 +20,7 @@ namespace ChatService.Games.FrankinStory
         object locker = new object();
         List<ChatLine> chatContent = new List<ChatLine>();
         List<CPacheStream> disposedRunningList = new List<CPacheStream>();
+        List<FrankenStoryLine> Story = new List<FrankenStoryLine>();
         public void addLine(ChatLine chatLine, CPacheStream cPacheStream)
         {
             if (cpacheStreams.ContainsKey(cPacheStream.StreamId))
@@ -59,7 +61,86 @@ namespace ChatService.Games.FrankinStory
 
         public string handleClientAppMessage(ChatLine chat)
         {
-            throw new NotImplementedException();
+            switch (chat.content.Substring(7, 3))
+            {
+                case "STG":
+                    FrankenStoryGameUpdate gameUpdate = new FrankenStoryGameUpdate() { players = new List<Player>() };
+                    foreach (KeyValuePair<String, Player> keyValuePair in players)
+                    {
+                        gameUpdate.players.Add(keyValuePair.Value);
+                    }
+                    var retval = Newtonsoft.Json.JsonConvert.SerializeObject(gameUpdate);
+                    foreach (KeyValuePair<String, CPacheStream> streams in cpacheStreams)
+                    {
+                        streams.Value.Broadcast("SideCarSTG" + retval);
+                        // becuase we are starting the game everyone gets their white cards                         
+                    }
+                    return "SideCarSTG" + retval;
+                case "FSU"://frankenstoryUpdate
+                    var storyupdate = new FrankenStoryLine() { content = chat.content.Substring(10, chat.content.Length - 10) };
+                    storyupdate.username = chat.userName;
+                    storyupdate.date = System.DateTime.Now;
+                    Story.Add(storyupdate);
+                    var ret = Newtonsoft.Json.JsonConvert.SerializeObject(storyupdate);
+                    foreach (KeyValuePair<String, CPacheStream> streams in cpacheStreams)
+                    {
+                        //here's Story Update
+                        streams.Value.Broadcast("SideCarHSU" + ret);
+                        // becuase we are starting the game everyone gets their white cards                         
+                    }
+
+         
+
+                    var i = 1;
+                    var lastTurn = 0;
+                    var nextTurn = 0;
+                    FrankenStoryGameUpdate gameUpdate2 = new FrankenStoryGameUpdate() { players = new List<Player>() };
+                    foreach (KeyValuePair<String, Player> keyValuePair in players)
+                    {
+                        if (keyValuePair.Value.myTurn)
+                        {
+                            lastTurn = i;
+                        }
+                        else
+                        {
+                            i = i + 1;
+                        }
+                    }
+                    if (lastTurn == players.Count)
+                    {
+                        nextTurn = 1;
+                    }
+                    else
+                    {
+                        nextTurn = lastTurn + 1;
+                    }
+                    i = 1;
+                    foreach (KeyValuePair<String, Player> keyValuePair in players)
+                    {
+                        if (nextTurn == i)
+                        {
+                            keyValuePair.Value.myTurn = true;
+                            i = i + 1;
+                        }
+                        else
+                        {
+                            keyValuePair.Value.myTurn = false;
+                            i = i + 1;
+                        }
+                        gameUpdate2.players.Add(keyValuePair.Value);
+                    }
+                   
+                    var JsonValue = Newtonsoft.Json.JsonConvert.SerializeObject(gameUpdate2);
+                    foreach (KeyValuePair<String, CPacheStream> c in cpacheStreams)
+                    {
+                        c.Value.Broadcast("SideCarSTG" + JsonValue);
+                    }
+
+                    //tell the next person it's there turn. 
+                    return "";
+                default:
+                    return "nothing";
+            }
         }
 
         public void subscribeToChat(CPacheStream cPacheStream)

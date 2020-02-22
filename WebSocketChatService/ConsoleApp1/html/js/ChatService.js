@@ -258,6 +258,8 @@ ChatServiceApp.controller('FrankinStoryController', function ($scope, $routePara
     $scope.blackCard = "";
     $scope.gamecontext = [];
     $scope.currentplayer = "";
+    $scope.enableStoryWrite = false;
+    $scope.Story = [];
 
     $scope.updatefromsidecar = function (data) {
         var switchVal = data.substring(7, 10);
@@ -266,11 +268,9 @@ ChatServiceApp.controller('FrankinStoryController', function ($scope, $routePara
             case "STG":
                 console.log("Start the game");
                 var context = JSON.parse(data.replace("SideCarSTG", ""));
-                $scope.PossWinnerWhiteCards = [];
+               
                 $scope.players = context.players;
-                $scope.blackCard = context.BlackCard;
                 $scope.gamecontext = context;
-
                 $scope.gamecontext.players.forEach(function (p) {
                     if (p.myTurn) {
                         $scope.currentplayer = p.Username;
@@ -280,57 +280,28 @@ ChatServiceApp.controller('FrankinStoryController', function ($scope, $routePara
                     if (p.Username == $scope.Username) {
                         if (p.myTurn == true) {
                             $scope.myturn = true;
-                            $scope.Message = "Wait For Everyone To Play Their White Cards";
-                            $scope.showMyWhite = false;
+                            $scope.Message = "It's Your Turn To Write Something";
+                            $scope.enableStoryWrite = true;
                         } else {
                             $scope.myturn = false;
+                            $scope.enableStoryWrite = false;
                         }
                     }
                     if ($scope.myturn == false) {
-                        $scope.Message = "Select A White Card To Play";
-                        $scope.showMyWhite = true;
-                        $scope.showPossWhite = false;
-                        $scope.PossWinnerWhiteCards = [];
+                        $scope.Message = "Wait For The Story Writer";
+                        $scope.myturn = false;
+                        $scope.enableStoryWrite = false;
                     }
                 });
 
                 break;
             // Select the Winner
-            case "STW":
-                console.log("Select the Winner");
+            case "HSU":
+                
+                var updateContext = JSON.parse(data.replace("SideCarHSU", ""));
+                $scope.Story.push(updateContext);
                 break;
-            // Pick Your White Card It's time to select a winner 
-            case "PWC":
-                console.log("Possible White Card");
-                var posscardcontext = JSON.parse(data.replace("SideCarPWC", ""));
-                $scope.PossWinnerWhiteCards.push(posscardcontext);
-                if ($scope.myturn) {
-                    $scope.Message = "Select A White Card To Win";
-                } else {
-
-
-                    $scope.Message = "Waiting For " + $scope.currentplayer + " To Pick A Card";
-                }
-                $scope.showPossWhite = true;
-                break;
-            // New White Card 
-            case "HWC":
-                var cardcontext = JSON.parse(data.replace("SideCarHWC", ""));
-                $scope.myWhiteCards.push(cardcontext);
-                break;
-            // Wait For White Cards. 
-            case "WFC":
-                console.log("Wait For White Cards.");
-                break;
-            // Announce Winning White Card 
-            case "WWC":
-                var winningCard = JSON.parse(data.replace("SideCarWWC", ""));
-                winningCard.content = "Winner Is: " + winningCard.content;
-                $scope.PossWinnerWhiteCards = [];
-                $scope.PossWinnerWhiteCards.push(winningCard);
-                break;
-
-
+            // Pick Your White Card It's time to select a winner           
         }
     };
     $scope.update = function (eventdata) {
@@ -354,37 +325,21 @@ ChatServiceApp.controller('FrankinStoryController', function ($scope, $routePara
 
     };
 
-    $scope.sendWhiteCard = function (cardValue) {
-        $scope.myWhiteCards.splice($scope.myWhiteCards.indexOf(cardValue), 1);
-        $scope.Message = "Wait for the other players";
-        $scope.showMyWhite = false;
+    $scope.sendStoryUpdate = function () {
+       
+        $scope.Message = "Sending Message...";
+       
         var message = {
-            "content": "SideCarWCD" + cardValue.content,
+            "content": "SideCarFSU" + $scope.userinput,
             "userName": $scope.Username,
             "dateTime": "11/16/1991",
             "userColor": "red"
         };
 
         socket.send(JSON.stringify(message));
+        $scope.userinput = "";
     };
-    $scope.selectWinningWhiteCard = function (cardValue) {
-
-        if (!$scope.myturn) {
-            return;
-        }
-
-
-        var message = {
-            "content": "SideCarWCS" + cardValue.content,
-            "userName": $scope.Username,
-            "dateTime": "11/16/1991",
-            "userColor": "red"
-        };
-
-        socket.send(JSON.stringify(message));
-    };
-
-
+  
 
 
     $scope.SendMemo = function () {
